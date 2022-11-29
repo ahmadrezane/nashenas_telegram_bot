@@ -1,0 +1,18 @@
+{
+    "message_id": 255,
+    "from": {
+        "id": 96216700,
+        "is_bot": false,
+        "first_name": "Ahmadreza",
+        "username": "ahmadrezane",
+        "language_code": "en"
+    },
+    "chat": {
+        "id": 96216700,
+        "first_name": "Ahmadreza",
+        "username": "ahmadrezane",
+        "type": "private"
+    },
+    "date": 1668980457,
+    "text": "j"
+}
