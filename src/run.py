@@ -1,20 +1,14 @@
 import emoji
-
 from loguru import logger
 
 from src.bot import bot
-from src.constant import mykeyboard, keys, states
+from src.constant import keys, mykeyboard, states
 from src.db import db
-from src.filters import IsAdmin
 
-# flake8: noqa on a line by itself
 
 class Bot:
    def __init__(self, telebot):
       self.bot = telebot
-
-      #add custom filters
-      self.bot.add_custom_filter(IsAdmin())
 
       #register handlers
       self.handlers()
@@ -87,7 +81,7 @@ class Bot:
 
          # update other user state
          connected_to = db.users.find_one(
-            {'chat_id':message.chat.id}
+            {'chat_id': message.chat.id}
          )['connected_to']
 
          if not connected_to:
@@ -109,20 +103,16 @@ class Bot:
          )
 
 
-      @self.bot.message_handler(is_chat_admin=True)
-      def is_admin(message):
-         self.bot.send_message(message.chat.id, 'oh you are the boss and admin of this group')
-
       @self.bot.message_handler(func=lambda message:True)
       def echo_all(message):
-         """"
-         echo message to other connected user
-         """
-         
+            """"
+            echo message to other connected user.
+            """
+
             user = db.users.find_one(
                {'chat_id': message.chat.id}
             )
-            if (not user) (user['state'] != states.connected) or (user['connected_to'] == None):
+            if (not user) or (user['state'] != states.connected) or (user['connected_to'] == None):
                return
 
             self.bot.send_message(user['connected_to'], message.text)
@@ -140,8 +130,6 @@ class Bot:
          {'chat_id': chat_id},
          {'$set': {'state': state}}
       )
-
-
 
 
 
